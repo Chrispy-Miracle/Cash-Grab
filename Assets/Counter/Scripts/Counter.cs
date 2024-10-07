@@ -6,7 +6,7 @@ public class Counter : MonoBehaviour
 {
 
     public Text billCounterText;
-    public Text cashCounterText;
+    public TextMeshProUGUI cashCounterText;
     public TextMeshProUGUI latestGrabText;
     public TextMeshProUGUI timerText;
     
@@ -15,7 +15,8 @@ public class Counter : MonoBehaviour
     public GameObject gameManager;
     private GameManager gameManagerScript;
 
-    private ParticleSystem greenExplosion;
+    private ParticleSystem greenExplosionLeft;
+    private ParticleSystem greenExplosionRight;
     
     public int count = 0;
     public int moneyTotal = 0;
@@ -26,7 +27,9 @@ public class Counter : MonoBehaviour
     private void Start()
     {
         gameManagerScript = gameManager.GetComponent<GameManager>();
-        greenExplosion = GameObject.Find("Explosion_Green").GetComponent<ParticleSystem>();
+        greenExplosionLeft = GameObject.Find("Explosion_Green_Left").GetComponent<ParticleSystem>();
+        greenExplosionRight = GameObject.Find("Explosion_Green_Right").GetComponent<ParticleSystem>();
+
     }
 
 
@@ -40,13 +43,14 @@ public class Counter : MonoBehaviour
     public void UpdateCounter(int dollarValue) {
         count++;
         moneyTotal += dollarValue;
-        greenExplosion.Play();
+        greenExplosionLeft.Play();
+        greenExplosionRight.Play();
 
         HandleEndGameTotals(dollarValue);
 
         latestGrabText.text = $"+ {dollarValue}";
-        billCounterText.text = $"Bills collected: {count}";
-        cashCounterText.text = $"Total Cash:\n${moneyTotal}";
+        billCounterText.text = $"{count}  Bills collected";
+        cashCounterText.text = $"${moneyTotal}";
     }
 
 

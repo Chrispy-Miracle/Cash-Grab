@@ -51,5 +51,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Counting Prototype.sln"
+    "dotnet.defaultSolution": "Cash-Grab.sln"
 }

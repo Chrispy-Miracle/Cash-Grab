@@ -31,14 +31,14 @@ public class RotateCamera : MonoBehaviour
 
         // values to allow but constrain view angles
         canLookUp = transform.eulerAngles.x > 10.0f;
-        canLookDown = transform.eulerAngles.x < 35.0f;
-        canLookRight = transform.eulerAngles.y < 290f;
-        canLookLeft = transform.eulerAngles.y > 250f;
+        canLookDown = transform.eulerAngles.x < 30.0f;
+        canLookRight = transform.eulerAngles.y < 280f;
+        canLookLeft = transform.eulerAngles.y > 260f;
 
         // look up/down   
-        if (canLookUp && verticalInput < 0) {
+        if (canLookUp && verticalInput > 0) {
             UpdateCameraVertical();
-        } else if (canLookDown  && verticalInput > 0) {
+        } else if (canLookDown  && verticalInput < 0) {
             UpdateCameraVertical();
         }
         // look right/left
@@ -51,7 +51,7 @@ public class RotateCamera : MonoBehaviour
     }
 
     void UpdateCameraVertical() {
-        transform.Rotate(Vector3.right * verticalInput * Time.deltaTime * rotateSpeed);
+        transform.Rotate(Vector3.right * -verticalInput * Time.deltaTime * rotateSpeed);
     }
 
     void UpdateCameraHorizontal() {
