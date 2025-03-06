@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private Dollar dollarScript;
+
     private float countdownTimer = 5;
 
     // game state bools
@@ -58,14 +59,16 @@ public class GameManager : MonoBehaviour
 
     // Countdown starts with "Start" button
     public void StartCountdown() {
+        countdownActive = true;
+        // toggle UI screens
         titleScreen.SetActive(false);
         countdownScreen.SetActive(true);
-        countdownActive = true;    
+        // play audio   
         StartCoroutine(PlayCountdownBeep());
         fanAudioSource.PlayOneShot(fanAudioSource.clip);  
     }
 
-    // coroutine called in "StartCountdown"
+
     IEnumerator PlayCountdownBeep() {
         while (countdownActive) {
             countdownAudioSource.PlayOneShot(countdownAudioSource.clip);

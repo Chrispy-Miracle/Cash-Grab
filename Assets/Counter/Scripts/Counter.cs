@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class Counter : MonoBehaviour
 {    
-    public GameObject gameManager;
     private GameManager gameManagerScript;
+    
     private float timeLeft = 30;
 
     // UI 
@@ -26,7 +26,7 @@ public class Counter : MonoBehaviour
 
     private void Start()
     {
-        gameManagerScript = gameManager.GetComponent<GameManager>();
+        gameManagerScript = GameObject.Find("Game Manager").GetComponent<GameManager>();
 
         // particles
         greenExplosionLeft = GameObject.Find("Explosion_Green_Left").GetComponent<ParticleSystem>();
@@ -51,7 +51,7 @@ public class Counter : MonoBehaviour
         latestGrabText.text = $"+ {dollarValue}";
         billCounterText.text = $"{billCount}  Bills collected";
         cashCounterText.text = $"${moneyTotal}";
-        
+
         // particles
         greenExplosionLeft.Play();
         greenExplosionRight.Play();

@@ -15,13 +15,6 @@ public class RotateCamera : MonoBehaviour
     private bool canLookRight = true;
     private bool canLookLeft = true;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {

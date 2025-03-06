@@ -5,15 +5,15 @@ using UnityEngine;
 public class RotateObject : MonoBehaviour
 {
     public float rotateSpeed;
-    public GameObject gameManager;
     private GameManager gameManagerScript;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        gameManagerScript =  gameManager.GetComponent<GameManager>();
+        gameManagerScript =  GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
+
 
     // Update is called once per frame
     void Update()
