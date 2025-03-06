@@ -3,33 +3,34 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Counter : MonoBehaviour
-{
+{    
+    public GameObject gameManager;
+    private GameManager gameManagerScript;
+    private float timeLeft = 30;
 
+    // UI 
     public Text billCounterText;
     public TextMeshProUGUI cashCounterText;
     public TextMeshProUGUI latestGrabText;
     public TextMeshProUGUI timerText;
     
-    
-    
-    public GameObject gameManager;
-    private GameManager gameManagerScript;
-
+    // particles
     private ParticleSystem greenExplosionLeft;
     private ParticleSystem greenExplosionRight;
     
-    public int count = 0;
-    public int moneyTotal = 0;
-    private float timer = 30;
-    private int[] dollarTypeTotals = {0,0,0,0,0,0,0};
+    // counters
+    private int billCount = 0;
+    private int moneyTotal = 0;
+    private int[] dollarTypeTotals = {0,0,0,0,0,0,0}; // number of bills of each type: {1s,2s,5s,10s,20s,50s,100s}
 
 
     private void Start()
     {
         gameManagerScript = gameManager.GetComponent<GameManager>();
+
+        // particles
         greenExplosionLeft = GameObject.Find("Explosion_Green_Left").GetComponent<ParticleSystem>();
         greenExplosionRight = GameObject.Find("Explosion_Green_Right").GetComponent<ParticleSystem>();
-
     }
 
 
@@ -39,31 +40,34 @@ public class Counter : MonoBehaviour
         } 
     }
 
-
+    // called in Dollar.cs upon dollar being clicked
     public void UpdateCounter(int dollarValue) {
-        count++;
+        // counters
+        billCount++;
         moneyTotal += dollarValue;
-        greenExplosionLeft.Play();
-        greenExplosionRight.Play();
-
         HandleEndGameTotals(dollarValue);
 
+        // UI
         latestGrabText.text = $"+ {dollarValue}";
-        billCounterText.text = $"{count}  Bills collected";
+        billCounterText.text = $"{billCount}  Bills collected";
         cashCounterText.text = $"${moneyTotal}";
+        
+        // particles
+        greenExplosionLeft.Play();
+        greenExplosionRight.Play();
     }
 
 
     void HandleTimer() {
-        timer -= Time.deltaTime;
+        timeLeft -= Time.deltaTime;
 
         // format extra 0 if seconds left is 10
-        string seconds = Mathf.Round(timer) >= 10 ? $"{Mathf.Round(timer)}" : $"0{Mathf.Round(timer)}";
+        string seconds = Mathf.Round(timeLeft) >= 10 ? $"{Mathf.Round(timeLeft)}" : $"0{Mathf.Round(timeLeft)}";
         timerText.text = $"00:{seconds}";
 
         // end game when time is up
-        if (timer <= 0) {
-            gameManagerScript.EndGame(dollarTypeTotals);
+        if (timeLeft <= 0) {
+            gameManagerScript.EndGame(dollarTypeTotals, billCount, moneyTotal);
         }
     }
 
